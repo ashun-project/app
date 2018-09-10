@@ -1,13 +1,13 @@
 var express = require('express')
 var app = express();
 var path = require('path');
-var mysql = require('mysql');
-var pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'ashun666',
-    database: 'vip'
-});
+// var mysql = require('mysql');
+// var pool = mysql.createPool({
+//     host: 'localhost',
+//     user: 'root',
+//     password: 'ashun666',
+//     database: 'vip'
+// });
 // router.post('/api/getAllList', function (req, res) {
 //     var sql = 'SELECT * FROM ' + req.body.title + 'list';
 //     pool.getConnection(function (err, conn) {
@@ -97,4 +97,36 @@ app.get('/logined', function(req,res) {
 app.post('/register', function(req,res) {
     res.render('register',{pageTitle:'注册',layout:false});
 });
+app.get('/list/:page/',function(req,res){
+    var pageInfo = {
+        page:+req.params.page,
+        total:20,
+        lists:[
+            {
+                id:'1',
+                imgUrl:'https://img.hostla.top/uploadfl/portal/20180116/af890c47d49f9c46fe1c11453be84a7d.jpg',
+                title:' 【在线】18.1.13 蓝兔子 ',
+                url:'https://51xiaoluoli.site/',
+                time:'14小时前',
+            },
+            {
+                id:'2',
+                imgUrl:'https://img.hostla.top/uploadfl/portal/20180116/74bd0346673465cbbf1aee7c271d7883.jpg',
+                title:'  [在线]极品大胸美模惜萍酒店私拍第2弹1080P高清无水印 ',
+                url:'https://51xiaoluoli.site/',
+                time:'14小时前'
+            },
+        ]
+    };
+    res.render('list',{pageTitle:'列表',pageInfo:pageInfo,layout:false});
+})
+app.get('/:id',function(req,res){
+    var detailInfo ={
+        title:'【在线】18.1.13 蓝兔子 ',
+        category:'在线视频',
+        time:'2018-9-7',
+        src:'https://mp.xiaojiejie99.top/uploads/5dPrUy8B7mWJX3sSpivxCv29rULVBA/2018011622245274848950.mp4'
+    };
+    res.render('detail',{pageTitle:'详情',detailInfo:detailInfo,layout:false});
+})
 app.listen(1337);
