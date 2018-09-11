@@ -1,132 +1,86 @@
-var express = require('express')
-var app = express();
-var path = require('path');
-// var mysql = require('mysql');
-// var pool = mysql.createPool({
-//     host: 'localhost',
-//     user: 'root',
-//     password: 'ashun666',
-//     database: 'vip'
-// });
-// router.post('/api/getAllList', function (req, res) {
-//     var sql = 'SELECT * FROM ' + req.body.title + 'list';
-//     pool.getConnection(function (err, conn) {
-//         if (err) console.log("POOL ==> " + err);
-//         conn.query(sql, function (err, result) {
-//             if (err) {
-//                 console.log('[SELECT ERROR] - ', err.message);
-//                 res.send('error');
-//             } else {
-//                 res.json(result);
-//             }
-//             conn.release();
-//         });
-//     })
-// })
-// router.post('/api/getList', function (req, res) {
-//     // console.log(html)
-//     var currentIp = getIp(req)
-//     console.log('getList----' + req.body.title + '=====', currentIp)
-//     if (currentIp.indexOf('195.201.218.75') > -1) {
-//         // console.log('getList----',currentIp)
-//         // res.send('who are you');
-//         // return;
-//     }
-//     var limit = ((req.body.current - 1) * 20) + ',' + 20;
-//     var sql = 'SELECT * FROM ' + req.body.title + 'list order by createTime desc limit ' + limit;
-//     var count = 'SELECT COUNT(*) FROM ' + req.body.title + 'list';
-//     pool.getConnection(function (err, conn) {
-//         if (err) console.log("POOL ==> " + err);
-//         conn.query(sql, function (err, result) {
-//             if (err) {
-//                 console.log('[SELECT ERROR] - ', err.message);
-//                 res.send('error');
-//                 conn.release();
-//             } else {
-//                 // res.json({total:21, data:result});
-//                 conn.query(count, function (err, num) {
-//                     if (err) {
-//                         res.send('error');
-//                     } else {
-//                         var arr = result.map(item => {
-//                             return {
-//                                 id: item.createTime,
-//                                 title: item.title,
-//                                 img: item.img
-//                             }
-//                         })
-//                         res.json({
-//                             total: num[0]['COUNT(*)'],
-//                             list: arr
-//                         });
-//                     }
-//                     conn.release();
-//                 })
-//             }
-//         });
-//     })
-// })
+const path = require('path');
+const bodyParser = require('body-parser');
+const cookie = require('cookie-parser');
+const express = require('express');
+const app = express();
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+const identityKey = 'skey';
+const mysql = require('mysql');
+const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: 'ashun666',
+    database: 'down_list'
+});
 
-app.set('view engine','jade');
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookie());
+app.use(session({
+    resave: true, // 是指每次请求都重新设置session cookie，假设你的cookie是6000毫秒过期，每次请求都会再设置6000毫秒
+    saveUninitialized: false, // 是指无论有没有session cookie，每次请求都设置个session cookie
+    store: new FileStore(), // 本地存储session（文本文件，也可以选择其他store，比如redis的）
+    secret: '123456', //  加密
+    name: identityKey, //这里的name值得是cookie的name，默认cookie的name是：connect.sid
+    cookie: {
+        maxAge: 16000
+    }, //设置maxAge是80000ms，即80s后session和相应的cookie失效过期
+}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+app.use(express.static(path.resolve(__dirname, './static')));
 
-app.get('/', function(req,res) {
-    // var sql = 'SELECT * FROM sanjilist WHERE title like "%三%"';
-    // pool.getConnection(function (err, conn) {
-    //     if (err) console.log("POOL ==> " + err);
-    //     conn.query(sql, function (err, result) {
-    //         if (err) {
-    //             console.log('[SELECT ERROR] - ', err.message);
-    //             // res.send('error');
-    //         } else {
-    //             // res.json(result);
-    //             console.log(result, '====')
-    //         }
-    //         conn.release();
-    //     });
-    // })
-    res.render('index',{pageTitle:'使用示例',layout:false});
+var myUser = {
+    userName: 'ashun',
+    password: '123456'
+}
+
+app.get('/aaa', function (req, res, next) {
+    var sess = req.session;
+    var loginUser = sess.loginUser;
+    var isLogined = !!loginUser;
+    console.log(sess, 'sess==========')
+    res.json({
+        isLogined: isLogined,
+        name: loginUser || ''
+    });
 });
-app.get('/login', function(req,res) {
-    res.render('login',{pageTitle:'登入',layout:false});
+
+app.post('/login', function (req, res, next) {
+    var user = '';
+    if (req.body.name === myUser.userName && req.body.password === myUser.password) {
+        user = true;
+    }
+    if (user) {
+        req.session.regenerate(function (err) {
+            if (err) {
+                return res.json({ ret_code: 2, ret_msg: '登录失败' });
+            }
+            req.session.loginUser = '123456';
+            res.json({ ret_code: 0, ret_msg: '登录成功' });
+        });
+    } else {
+        res.json({ ret_code: 1, ret_msg: '账号或密码错误' });
+    }
 });
-app.get('/logined', function(req,res) {
-    console.log(req.body,req.params, req.query, '==========')
-    res.render('logined',{pageTitle:'登入',layout:false});
+
+// 退出登录
+app.post('/logout', function (req, res, next) {
+    // 备注：这里用的 session-file-store 在destroy 方法里，并没有销毁cookie
+    // 所以客户端的 cookie 还是存在，导致的问题 --> 退出登陆后，服务端检测到cookie
+    // 然后去查找对应的 session 文件，报错
+    // session-file-store 本身的bug  
+
+    req.session.destroy(function (err) {
+        if (err) {
+            res.json({ ret_code: 2, ret_msg: '退出登录失败' });
+            return;
+        }
+        req.session.loginUser = null;
+        res.clearCookie(identityKey);
+        res.json({aa:'退出成功'});
+    });
 });
-app.post('/register', function(req,res) {
-    res.render('register',{pageTitle:'注册',layout:false});
-});
-app.get('/list/:page/',function(req,res){
-    var pageInfo = {
-        page:+req.params.page,
-        total:20,
-        lists:[
-            {
-                id:'1',
-                imgUrl:'https://img.hostla.top/uploadfl/portal/20180116/af890c47d49f9c46fe1c11453be84a7d.jpg',
-                title:' 【在线】18.1.13 蓝兔子 ',
-                url:'https://51xiaoluoli.site/',
-                time:'14小时前',
-            },
-            {
-                id:'2',
-                imgUrl:'https://img.hostla.top/uploadfl/portal/20180116/74bd0346673465cbbf1aee7c271d7883.jpg',
-                title:'  [在线]极品大胸美模惜萍酒店私拍第2弹1080P高清无水印 ',
-                url:'https://51xiaoluoli.site/',
-                time:'14小时前'
-            },
-        ]
-    };
-    res.render('list',{pageTitle:'列表',pageInfo:pageInfo,layout:false});
-})
-app.get('/:id',function(req,res){
-    var detailInfo ={
-        title:'【在线】18.1.13 蓝兔子 ',
-        category:'在线视频',
-        time:'2018-9-7',
-        src:'https://mp.xiaojiejie99.top/uploads/5dPrUy8B7mWJX3sSpivxCv29rULVBA/2018011622245274848950.mp4'
-    };
-    res.render('detail',{pageTitle:'详情',detailInfo:detailInfo,layout:false});
-})
-app.listen(1337);
+
+app.listen(8899);
