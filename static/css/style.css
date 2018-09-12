@@ -144,6 +144,9 @@
     border-radius: 3px;
     color: #fff;
 }
+#logined{
+    display: none;
+}
 .mask{
     position: fixed;
     top: 0;
@@ -204,6 +207,39 @@
     right: 20px;
     color: rgba(255, 0, 0, 0.934);
     cursor: pointer;
+}
+.test-look{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    max-width: 400px;
+    width: 98%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    box-shadow: 0 0 20px rgba(33, 28, 28, 0.3);
+    z-index: 100;
+    text-align: center;
+    transition: all 0.2ms;
+    display: none;
+}
+.test-body{
+    line-height: 120px;
+    color: rgb(221, 3, 3);
+    font-weight: 600;
+}
+.test-foot{
+    border-top: 1px solid #eee;
+    padding: 20px 0;
+}
+.test-look button{
+    padding: 5px 20px;
+    background: #fff;
+    border: 1px solid #e5e6e7;
+    box-shadow: 0 0 10px rgba(51, 51, 51, 0.09);
+    margin: 0 10px;
+}
+.test-look button:active{
+    background: #eee;
 }
 @media screen and (max-width: 600px) {
     .head-cont{

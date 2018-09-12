@@ -18,9 +18,13 @@
                 <input id="pc-search" type="text" placeholder="请搜索如：萝莉">
                 <button onclick="search('pc-search')">搜索</button>
             </div>
-            <div class="head-rf">
+            <div class="head-rf" id="not-login">
                 <span onclick="showMOdel('login')">登录</span>
                 <span onclick="showMOdel('register')"> 注册 </span>
+            </div>
+            <div class="head-rf" id="logined">
+                <span onclick="goMyCenter()" id="user-account">用户</span>
+                <span onclick="outLogin()"> 退出 </span>
             </div>
         </div>
         <div class="mobal-search search">

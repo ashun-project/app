@@ -29,7 +29,7 @@ app.use(session({
     secret: '123456', //  加密
     name: 'testapp', //这里的name值得是cookie的name，默认cookie的name是：connect.sid
     cookie: {
-        maxAge: 16000
+        maxAge: 100000
     }, //设置maxAge是80000ms，即80s后session和相应的cookie失效过期
 }));
 app.use(bodyParser.json());
@@ -144,38 +144,13 @@ app.post('/login', function (req, res, next) {
             conn.release();
         });
     });
-    // if (req.body.name === myUser.userName && req.body.password === myUser.password) {
-    //     user = true;
-    // }
-    // if (user) {
-    //     req.session.regenerate(function (err) {
-    //         if (err) {
-    //             return res.json({ ret_code: 2, ret_msg: '登录失败' });
-    //         }
-    //         req.session.loginUser = '123456';
-    //         res.json({ ret_code: 0, ret_msg: '登录成功' });
-    //     });
-    // } else {
-    //     res.json({ ret_code: 1, ret_msg: '账号或密码错误' });
-    // }
 });
 
 // 退出登录
 app.post('/logout', function (req, res, next) {
-    // 备注：这里用的 session-file-store 在destroy 方法里，并没有销毁cookie
-    // 所以客户端的 cookie 还是存在，导致的问题 --> 退出登陆后，服务端检测到cookie
-    // 然后去查找对应的 session 文件，报错
-    // session-file-store 本身的bug  
-
-    req.session.destroy(function (err) {
-        if (err) {
-            res.json({ error: '退出登录失败' });
-            return;
-        }
-        req.session.loginUser = null;
-        res.clearCookie(identityKey);
-        res.json({success:'退出成功'});
-    });
+    req.session.loginUser = null;
+    res.clearCookie(identityKey);
+    res.json({success:'退出成功'});
 });
 
 app.listen(8899);

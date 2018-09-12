@@ -6,6 +6,14 @@ var loginBtn = document.querySelector('.login button');
 var registerBtn = document.querySelector('.register button');
 var loginForm = document.getElementById('login-form');
 var registerForm = document.getElementById('register-form');
+var logined = document.getElementById('logined');
+var notLogin = document.getElementById('not-login');
+var userAccount = document.getElementById('user-account');
+var testLook = document.getElementById('test-look');
+var time = new Date().getTime();
+var member = null;
+var pageUrl = window.location.href;
+
 getVaidlogin();
 mask.addEventListener('click', closeModal);
 loginBtn.addEventListener('click', getLogin);
@@ -70,18 +78,16 @@ function vaidParams(obj, url) {
     }
     ajax({  
         type: "post",
-          url: url,
-          beforeSend: function () {},
-            //some js code 
+        url: url,
         data: obj,
         success: function (data) {
             var result = JSON.parse(data);
             if (result.error) {
                 alert(result.error);
             } else {
-                // alert('操作成功');
-                console.log(typeof result, '操作成功');
-                sessionStorage.setItem('user', data);
+                // sessionStorage.setItem('user', data);
+                // changeHead(result.userName);
+                location.reload();
             }
         },
         error: function () {
@@ -89,30 +95,100 @@ function vaidParams(obj, url) {
         }
     });
 }
-function getVaidlogin () {
+function outLogin () {
     ajax({  
         type: "post",
-          url: "/vdidLogin",
-          beforeSend: function () {},
-            //some js code 
+        url: '/logout',
+        beforeSend: function () {},
         success: function (data) {
-            console.log(typeof data, data, 'vaid')
             var result = JSON.parse(data);
             if (result.error) {
-                var user = sessionStorage.getItem('user');
-                if (user) {
-                    user = JSON.parse(user);
-                    if (user.userName) {
-                        alert('登入失效，请重新登入');
-                        sessionStorage.setItem('user', '');
-                    }
-                }
+                alert(result.error);
             } else {
-
+                sessionStorage.setItem('user', '');
+                // changeHead(); //todo 替换reload
+                location.reload();
             }
         },
         error: function () {
             alert('系统异常，操作失败');
         }
     });
+}
+function changeHead (name) {
+    if (name) {
+        logined.style.display = 'block';
+        notLogin.style.display = 'none';
+        userAccount.textContent = name;
+
+    } else {
+        logined.style.display = 'none';
+        notLogin.style.display = 'block'; 
+    }
+}
+function getVaidlogin () {
+    ajax({  
+        type: "post",
+        url: "/vdidLogin",
+        success: function (data) {
+            var result = JSON.parse(data);
+            if (result.error) {
+                var user = sessionStorage.getItem('user');
+                if (user) {
+                    alert('登入过期，请重新登入');
+                    sessionStorage.setItem('user', '');
+                }
+            } else {
+                if (!sessionStorage.getItem('user')) {
+                    sessionStorage.setItem('user', data);
+                }
+                changeHead(result.userName);
+            }
+            getMember(result);
+        },
+        error: function () {
+            alert('系统异常，操作失败');
+        }
+    });
+}
+function getMember (result) {
+    var myValue = '';
+    var num = 0;
+    var timer = setInterval(function () {
+        myValue = document.getElementsByTagName('video')[0];
+        num += 30;
+        if (myValue) {
+            clearInterval(timer);
+            if (pageUrl.indexOf('detail.html') > -1 && !getEndDate(result.endDate)) {
+                testLook.style.display = 'block';
+            } else {
+                myValue.src = myValue.getAttribute('src').replace('?end=120', '');
+            }
+        }
+        if (num > 6000) {
+            clearInterval(timer);
+        }
+    }, 30);
+    
+}
+function getEndDate (date) {
+    var isM = false;
+    var endTime = '';
+    if (date) {
+        endTime = new Date(date.replace(/-/g, '/')).getTime();
+        if (endTime > time) {
+            isM = true;
+        }
+    }
+    return isM;
+}
+function continueTest() {
+    testLook.style.display = 'none';
+}
+function beComeMember () {
+    testLook.style.display = 'none';
+    alert('完善中...');
+}
+function goMyCenter() {
+    alert('完善中...');
 }
