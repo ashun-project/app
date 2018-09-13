@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>个人中心</title>
+</head>
+
+<body>
+    <h1 style="display:none">萝莉红</h1>
+    <!-- <div class="info">
+        <span>用户名:</span>
+        <span>会员等级:</span>
+    </div> -->
+    <div class="header mine">
+        <div class="head-cont">
+            <div class="head-lf">
+                <a href="/" title="萝莉红">返回首页</a>
+            </div>
+            <div class="head-rf">
+                <span id="user-account">用户</span>
+                <span onclick="outLogin()"> 退出 </span>
+            </div>
+        </div>
+    </div>
+    <div class="ui-cnt fn-clear">
+        <div class="er">
+            <font color="#186209">
+                打开微信，扫描下方二维码付款<br>
+                <img src="./img/er.png">
+            </font>
+        </div>
+        <div>
+            <div style="font-size:16px">支付时填写对应日期金额</div>
+            ↓<br>
+            支付金额下方有个“添加留言”一定不要忘记填写你的用户名
+            <br>
+            <strong>
+                <font color="#FF0000">
+                    1 支付下方有个“添加留言”一定不要忘记填写你的用户名。<br>
+                    2 请尽量在上班时间充值09-23:30。<br>
+                    3 有任何问题请联系客服QQ 3257905932
+            </strong>
+        </div>
+    </div>
+    <div class="vipchooser">
+        <div class="item">
+            <li class="item_top">
+                <p class="title">VIP 7天(①周)</p>
+                <p class="money">￥9.9</p>
+            </li>
+        </div>
+        <div class="divmargin"></div>
+        <div class="item">
+            <li class="item_top">
+                <p class="title">VIP 30天(①月)</p>
+                <p class="money">￥26</p>
+            </li>
+        </div>
+        <div class="divmargin"></div>
+        <div class="item">
+            <li class="item_top">
+                <p class="title">VIP 120天(半年)</p>
+                <p class="money">￥120</p>
+            </li>
+        </div>
+        <div class="item">
+            <li class="item_top">
+                <p class="title">VIP 360天(①年)</p>
+                <p class="money">￥200</p>
+            </li>
+        </div>
+    </div>
+    <div class="footer">警告︰本網站只這合十八歲或以上人士觀看</div>
+    <script>
+        function ajax() {
+            var ajaxData = {
+                type: arguments[0].type || "GET",
+                url: arguments[0].url || "",
+                async: arguments[0].async || "true",
+                data: arguments[0].data || null,
+                dataType: arguments[0].dataType || "text",
+                contentType: arguments[0].contentType || "application/x-www-form-urlencoded",
+                beforeSend: arguments[0].beforeSend || function () { },
+                success: arguments[0].success || function () { },
+                error: arguments[0].error || function () { }
+            };
+            ajaxData.beforeSend();
+            var xhr = createxmlHttpRequest();
+            try {
+                xhr.responseType = ajaxData.dataType;
+            } catch (err) {
+                console.log(err)
+            };
+            xhr.open(ajaxData.type, ajaxData.url, ajaxData.async);
+            xhr.setRequestHeader("Content-Type", ajaxData.contentType);
+            xhr.send(convertData(ajaxData.data));
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        ajaxData.success(xhr.response);
+                    } else {
+                        ajaxData.error();
+                    }
+                }
+            }
+        };
+        function createxmlHttpRequest() {
+            if (window.ActiveXObject) {
+                return new ActiveXObject("Microsoft.XMLHTTP");
+            } else if (window.XMLHttpRequest) {
+                return new XMLHttpRequest();
+            }
+        };
+        function convertData(data) {
+            if (typeof data === 'object') {
+                var convertResult = "";
+                for (var c in data) {
+                    convertResult += c + "=" + data[c] + "&";
+                }
+                convertResult = convertResult.substring(0, convertResult.length - 1);
+                return convertResult;
+            } else {
+                return data;
+            }
+        };
+        getVaidlogin();
+        function getVaidlogin() {
+            ajax({
+                type: "post",
+                url: "/vdidLogin",
+                success: function (data) {
+                    var result = JSON.parse(data);
+                    if (result.error) {
+                        var user = sessionStorage.getItem('user');
+                        if (user) {
+                            alert('登入过期，请重新登入');
+                            sessionStorage.setItem('user', '');
+                        }
+                        window.location.href = '/';
+                    } else {
+                        if (!sessionStorage.getItem('user')) {
+                            sessionStorage.setItem('user', data);
+                        }
+                        var userAccount = document.getElementById('user-account');
+                        userAccount.textContent = result.userName;
+                    }
+                },
+                error: function () {
+                    alert('系统异常，操作失败');
+                }
+            });
+        }
+        function outLogin() {
+            ajax({
+                type: "post",
+                url: '/logout',
+                beforeSend: function () { },
+                success: function (data) {
+                    var result = JSON.parse(data);
+                    if (result.error) {
+                        alert(result.error);
+                    } else {
+                        sessionStorage.setItem('user', '');
+                        window.location.href = '/';
+                    }
+                },
+                error: function () {
+                    alert('系统异常，操作失败');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

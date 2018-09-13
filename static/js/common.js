@@ -1,3 +1,54 @@
+function ajax() {  
+    var ajaxData = {    
+        type: arguments[0].type || "GET",
+            url: arguments[0].url || "",
+            async: arguments[0].async || "true",
+            data: arguments[0].data || null,
+            dataType: arguments[0].dataType || "text",
+            contentType: arguments[0].contentType || "application/x-www-form-urlencoded",
+            beforeSend: arguments[0].beforeSend || function () {},
+            success: arguments[0].success || function () {},
+            error: arguments[0].error || function () {}  
+    }; 
+    ajaxData.beforeSend(); 
+    var xhr = createxmlHttpRequest();
+    try{
+        xhr.responseType = ajaxData.dataType;  
+    }catch (err) {
+        console.log(err)
+    };
+    xhr.open(ajaxData.type, ajaxData.url, ajaxData.async);   
+    xhr.setRequestHeader("Content-Type", ajaxData.contentType);   
+    xhr.send(convertData(ajaxData.data));   
+    xhr.onreadystatechange = function () {     
+        if (xhr.readyState == 4) {       
+            if (xhr.status == 200) {
+                ajaxData.success(xhr.response);      
+            } else {        
+                ajaxData.error();      
+            }     
+        }  
+    } 
+};
+function createxmlHttpRequest() {   
+    if (window.ActiveXObject) {     
+        return new ActiveXObject("Microsoft.XMLHTTP");   
+    } else if (window.XMLHttpRequest) {     
+        return new XMLHttpRequest();   
+    } 
+}; 
+function convertData(data) {  
+    if (typeof data === 'object') {    
+        var convertResult = "";     
+        for (var c in data) {       
+            convertResult += c + "=" + data[c] + "&";     
+        }     
+        convertResult = convertResult.substring(0, convertResult.length - 1);   
+        return convertResult;  
+    } else {    
+        return data;  
+    }
+};
 var modal = document.getElementsByClassName('modal');
 var mask = document.getElementsByClassName('mask')[0];
 var loginMOdel = document.getElementsByClassName('login')[0];
@@ -10,6 +61,7 @@ var logined = document.getElementById('logined');
 var notLogin = document.getElementById('not-login');
 var userAccount = document.getElementById('user-account');
 var testLook = document.getElementById('test-look');
+var myAuth = '?end='+60*2;
 var time = new Date().getTime();
 var member = null;
 var pageUrl = window.location.href;
@@ -133,7 +185,11 @@ function getVaidlogin () {
         success: function (data) {
             var result = JSON.parse(data);
             if (result.error) {
+                var testBody = document.getElementsByClassName('test-body')[0];
+                var testSure = document.getElementsByClassName('test-sure')[0];
                 var user = sessionStorage.getItem('user');
+                testBody.textContent = '你还没有登入，请先登录';
+                testSure.textContent = '去登录';
                 if (user) {
                     alert('登入过期，请重新登入');
                     sessionStorage.setItem('user', '');
@@ -144,7 +200,9 @@ function getVaidlogin () {
                 }
                 changeHead(result.userName);
             }
-            getMember(result);
+            if (pageUrl.indexOf('detail.html') > -1) {
+                getMember(result);
+            }
         },
         error: function () {
             alert('系统异常，操作失败');
@@ -152,43 +210,32 @@ function getVaidlogin () {
     });
 }
 function getMember (result) {
-    var myValue = '';
-    var num = 0;
-    var timer = setInterval(function () {
-        myValue = document.getElementsByTagName('video')[0];
-        num += 30;
-        if (myValue) {
-            clearInterval(timer);
-            if (pageUrl.indexOf('detail.html') > -1 && !getEndDate(result.endDate)) {
-                testLook.style.display = 'block';
-            } else {
-                myValue.src = myValue.getAttribute('src').replace('?end=120', '');
-            }
-        }
-        if (num > 6000) {
-            clearInterval(timer);
-        }
-    }, 30);
-    
-}
-function getEndDate (date) {
     var isM = false;
     var endTime = '';
-    if (date) {
-        endTime = new Date(date.replace(/-/g, '/')).getTime();
+    if (result.endDate) {
+        endTime = new Date(result.endDate.replace(/-/g, '/')).getTime();
         if (endTime > time) {
             isM = true;
         }
     }
-    return isM;
+    if(isM) {
+        getAuth(myAuth);
+    } else {
+        getAuth('');
+    }
 }
 function continueTest() {
     testLook.style.display = 'none';
 }
 function beComeMember () {
+    var user = sessionStorage.getItem('user');
     testLook.style.display = 'none';
-    alert('完善中...');
+    if (user) {
+        window.location.href = '/mine.html';
+    } else {
+        showMOdel('login');
+    }
 }
 function goMyCenter() {
-    alert('完善中...');
+    window.location.href = '/mine.html';
 }
