@@ -76,6 +76,9 @@
     line-height: 60px;
     padding: 0 5px;
 }
+.mine .head-cont{
+    max-width: 600px;
+}
 .head-lf {
     float: left;
     background: #f99f65;
@@ -91,6 +94,9 @@
 }
 .head-lf a{
     color: #fff;
+    display: block;
+    width: 100%;
+    height: 34px;
 }
 .head-lf a:hover{
     color: #fac09a;
@@ -143,6 +149,9 @@
     background: #1ab394;
     border-radius: 3px;
     color: #fff;
+}
+#logined{
+    display: none;
 }
 .mask{
     position: fixed;
@@ -204,6 +213,39 @@
     right: 20px;
     color: rgba(255, 0, 0, 0.934);
     cursor: pointer;
+}
+.test-look{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    max-width: 400px;
+    width: 98%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    box-shadow: 0 0 20px rgba(33, 28, 28, 0.3);
+    z-index: 100;
+    text-align: center;
+    transition: all 0.2ms;
+    display: none;
+}
+.test-body{
+    line-height: 120px;
+    color: rgb(221, 3, 3);
+    font-weight: 600;
+}
+.test-foot{
+    border-top: 1px solid #eee;
+    padding: 20px 0;
+}
+.test-look button{
+    padding: 5px 20px;
+    background: #fff;
+    border: 1px solid #e5e6e7;
+    box-shadow: 0 0 10px rgba(51, 51, 51, 0.09);
+    margin: 0 10px;
+}
+.test-look button:active{
+    background: #eee;
 }
 @media screen and (max-width: 600px) {
     .head-cont{
@@ -1113,4 +1155,98 @@ a.rlogin.reg_hre_btn>i>img{width:20px;height:auto;margin-right:3px}
 .fa-angle-double-left::after{
     content: '《';
     font-style: normal;
+}
+.vipchooser {
+    max-width: 600px;
+    width: 100%;
+	padding: 10px 10px;
+    height: auto;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    background: #fff;
+    padding: 5px;
+}
+.vipchooser .item {
+    width: 50%;
+    border-top: 5px solid #f99f65;
+    margin-top: 9px;
+    position: relative;
+
+}
+.vipchooser .item > li {
+    list-style: none;
+    background: #FFFFFF;
+    text-align: center;
+    font-size: 16px;
+    line-height: 28px;
+    padding: 5px 20px;
+}
+.vipchooser .item .title {
+    color: #646465;
+    font-size: 18px;
+    font-weight: normal;
+    padding-top: 20px;
+}
+.vipchooser .item > li p {
+    line-height: 30px;
+}
+.vipchooser .item .money {
+    color: #444444;
+    font-size: 20px;
+    font-weight: bolder;
+    padding-bottom: 20px;
+}
+.vipchooser .item > li {
+    list-style: none;
+    background: #FFFFFF;
+    text-align: center;
+    font-size: 16px;
+    line-height: 28px;
+    padding: 5px 20px;
+}
+.vipchooser .item .discount p {
+    font-size: 16px;
+    font-weight: bolder;
+    color: #4cd2c7;
+    border-bottom: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
+    padding: 20px 0;
+}
+.vipchooser .item > li {
+    list-style: none;
+    background: #FFFFFF;
+    text-align: center;
+    font-size: 16px;
+    line-height: 28px;
+    padding: 5px 20px;
+}
+.vipchooser .item .buysubmit button {
+    font-size: 20px;
+    font-weight: normal;
+    color: #4cd2c7;
+    border: 1px solid #4cd2c7;
+    background: #FFFFFF;
+    outline: none;
+    margin: 20px 0;
+    padding: 10px 20px;
+}
+.ui-cnt{
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    padding: 10px;
+    flex-wrap: wrap;
+    background: #fff;
+}
+.ui-cnt > div{
+    width: 100%;
+}
+.ui-cnt > div img{
+    max-width: 260px;
+}
+.ui-cnt > div.er{
+    text-align: center;
+    margin-bottom: 5px;
 }

@@ -12,15 +12,19 @@
     <div class="header">
         <div class="head-cont">
             <div class="head-lf">
-                <a href="http://xjb520.com" title="小鸡吧">点我返回普通区域</a>
+                <a href="/" title="萝莉红">返回首页</a>
             </div>
             <div class="head-search search">
                 <input id="pc-search" type="text" placeholder="请搜索如：萝莉">
                 <button onclick="search('pc-search')">搜索</button>
             </div>
-            <div class="head-rf">
+            <div class="head-rf" id="not-login">
                 <span onclick="showMOdel('login')">登录</span>
                 <span onclick="showMOdel('register')"> 注册 </span>
+            </div>
+            <div class="head-rf" id="logined">
+                <span onclick="goMyCenter()" id="user-account">用户</span>
+                <span onclick="outLogin()"> 退出 </span>
             </div>
         </div>
         <div class="mobal-search search">
@@ -32,8 +36,10 @@
     <div class="modal login">
         <span class="close" onclick="closeModal()">X</span>
         <div class="modal-body">
-            <input type="text" placeholder="用户名">
-            <input type="password" placeholder="密码">
+            <form action="" id="login-form">
+                <input type="text" name="userName" placeholder="用户名">
+                <input type="password" name="password" placeholder="密码">
+            </form>
         </div>
         <div class="modal-foot">
             <button>登&nbsp;&nbsp;&nbsp;录</button>
@@ -43,13 +49,22 @@
     <div class="modal register">
         <span class="close" onclick="closeModal()">X</span>
         <div class="modal-body">
-            <input type="text" placeholder="用户名">
-            <input type="password" placeholder="密码">
-            <input type="password" placeholder="确认密码">
+            <form action="" id="register-form">
+                <input type="text" name="userName" placeholder="用户名">
+                <input type="password" name="password" placeholder="密码">
+                <input type="password" name="vaidPassword" placeholder="确认密码">
+            </form>
         </div>
         <div class="modal-foot">
             <button>注&nbsp;&nbsp;&nbsp;册</button>
             <p><font color="red">已有账号吗？</font><span onclick="showMOdel('login')"><font color="#1ab394">去登入</font></span></p>
+        </div>
+    </div>
+    <div class="test-look" id="test-look">
+        <div class="test-body">你目前还不是VIP会员，只能试看两分钟。</div>
+        <div class="test-foot">
+            <button onclick="beComeMember()" class="test-sure">成为会员</button>
+            <button onclick="continueTest()">继续试看</button>
         </div>
     </div>
     <div class="bodyer detail" id="bodyer">
@@ -60,7 +75,7 @@
     </div>
     <div id="my-spare" style="display: none"></div>
     <div class="footer">警告︰本網站只這合十八歲或以上人士觀看</div>
-    <script src="./js/detail.js"></script>
     <script src="./js/common.js"></script>
+    <script src="./js/detail.js"></script>
 </body>
 </html>
