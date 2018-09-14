@@ -29,7 +29,7 @@ app.use(session({
     secret: '123456', //  加密
     name: 'testapp', //这里的name值得是cookie的name，默认cookie的name是：connect.sid
     cookie: {
-        maxAge: 1000000
+        maxAge: 18000000
     }, //设置maxAge是80000ms，即80s后session和相应的cookie失效过期
 }));
 app.use(bodyParser.json());
@@ -83,13 +83,6 @@ app.post('/register', function (req, res) {
                             console.log('register1- ', err1.message);
                             res.json({error: '系统出错请重新操作'});
                         }  else {
-                            // req.session.regenerate(function (err) {
-                            //     if (err) {
-                            //         return res.json({error: '登录失败' });
-                            //     }
-                            //     req.session.loginUser = {userName: userName};
-                            //     res.json({userName: userName});
-                            // });
                             req.session.loginUser = {userName: userName};
                             res.json({userName: userName});
                         }
@@ -144,6 +137,27 @@ app.post('/login', function (req, res, next) {
             conn.release();
         });
     });
+});
+
+// 重新查询登录
+app.post('/refreshLogin', function (req, res, next) {
+    var user = req.session.loginUser;
+    if (user && user.userName) {
+        var sql = 'SELECT * FROM list where userName = "'+ user.userName + '"';
+        pool.getConnection(function (err, conn) {
+            if (err) console.log("POOL refresh-register==> " + err);
+            conn.query(sql, function (err, result) {
+                if (result.length) {
+                    delete result[0].password;
+                    req.session.loginUser = result[0];
+                }
+                res.json({success: '结束'});
+                conn.release();
+            });
+        });
+    } else {
+        res.json({error: ''});
+    }
 });
 
 // 退出登录

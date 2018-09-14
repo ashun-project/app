@@ -185,11 +185,7 @@ function getVaidlogin () {
         success: function (data) {
             var result = JSON.parse(data);
             if (result.error) {
-                var testBody = document.getElementsByClassName('test-body')[0];
-                var testSure = document.getElementsByClassName('test-sure')[0];
                 var user = sessionStorage.getItem('user');
-                testBody.textContent = '你还没有登入，请先登录';
-                testSure.textContent = '去登录';
                 if (user) {
                     alert('登入过期，请重新登入');
                     sessionStorage.setItem('user', '');
@@ -201,6 +197,12 @@ function getVaidlogin () {
                 changeHead(result.userName);
             }
             if (pageUrl.indexOf('detail.html') > -1) {
+                if (result.error) {
+                    var testBody = document.getElementsByClassName('test-body')[0];
+                    var testSure = document.getElementsByClassName('test-sure')[0];
+                    testBody.textContent = '你还没有登入，请先登录';
+                    testSure.textContent = '去登录';
+                }
                 getMember(result);
             }
         },

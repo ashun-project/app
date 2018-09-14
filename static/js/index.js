@@ -42,10 +42,10 @@ function reset() {
         // 去除a链接
         for (var i = 0; i < getA.length; i++) {
             var href = getA[i].getAttribute('href');
-            if (href.indexOf('http:') > -1 && href.indexOf('https://51xiaoluoli.site/') <= -1) {
+            if (href.indexOf('http:') > -1 && href.indexOf('https://51xiaoluoli.bid/') <= -1) {
                 getA[i].parentNode.removeChild(getA[i]);
             } else {
-                getA[i].setAttribute('my-data', href.replace('https://51xiaoluoli.site/', ''));
+                getA[i].setAttribute('my-data', href.replace('https://51xiaoluoli.bid/', ''));
                 getA[i].removeAttribute('href');
             }
         }
@@ -57,7 +57,7 @@ function reset() {
                 imgs[i].setAttribute('src', src);
             }
             if (src.indexOf('http') === -1) {
-                imgs[i].setAttribute('src', '//51xiaoluoli.site/' + src);
+                imgs[i].setAttribute('src', '//51xiaoluoli.bid/' + src);
             }
         }
         

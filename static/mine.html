@@ -18,7 +18,7 @@
     <div class="header mine">
         <div class="head-cont">
             <div class="head-lf">
-                <a href="/" title="萝莉红">返回首页</a>
+                <a href="jacascript::void(0);" onclick="javascript:history.back(-1);" title="萝莉红">返回</a>
             </div>
             <div class="head-rf">
                 <span id="user-account">用户</span>
@@ -34,16 +34,15 @@
             </font>
         </div>
         <div>
-            <div style="font-size:16px">支付时填写对应日期金额</div>
-            ↓<br>
-            支付金额下方有个“添加留言”一定不要忘记填写你的用户名
-            <br>
+            <div style="font-size:16px;margin-bottom: 5px">支付步骤：↓</div>
             <strong>
                 <font color="#FF0000">
-                    1 支付下方有个“添加留言”一定不要忘记填写你的用户名。<br>
-                    2 请尽量在上班时间充值09-23:30。<br>
-                    3 有任何问题请联系客服QQ 3257905932
-            </strong>
+                    1、长按二维码“保存图片”（iOS需手动截屏保存）<br>
+                    2、打开微信“扫一扫”，从相册选取该二维码<br>
+                    3、付款下方"添加备注"你的用户名（必填）<br>
+                    4、联系客服<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=3257905932&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:3257905932:41" alt="点击这里给我发消息" title="点击这里给我发消息"/>3257905932</a>
+                </font>
+            </strong>        
         </div>
     </div>
     <div class="vipchooser">
@@ -170,6 +169,15 @@
                 },
                 error: function () {
                     alert('系统异常，操作失败');
+                }
+            });
+        }
+        function goBack() {
+            ajax({
+                type: "post",
+                url: '/refreshLogin',
+                success: function (data) {
+                    window.history.go(-1);
                 }
             });
         }
