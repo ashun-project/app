@@ -5,26 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="llh8,llh8.vip,llh8.vip有你/萝莉红吧,萝莉红.萝莉红在线, 萝莉">
+    <meta name="keywords" content="llh8,llh8.vip,llh8.vip有你/萝莉红吧,萝莉红.萝莉红在线, 萝莉">
     <link rel="stylesheet" href="./css/style.css">
-    <title>个人中心</title>
+    <title>萝莉红-个人中心</title>
 </head>
 
 <body>
     <h1 style="display:none">萝莉红</h1>
-    <!-- <div class="info">
-        <span>用户名:</span>
-        <span>会员等级:</span>
-    </div> -->
     <div class="header mine">
         <div class="head-cont">
             <div class="head-lf">
-                <a href="jacascript::void(0);" onclick="javascript:history.back(-1);" title="萝莉红">返回</a>
+                <a href="javascript:history.back(-1);" title="萝莉红">返回</a>
             </div>
             <div class="head-rf">
+                <span class="refresh" onclick="getRefresh()"><img src="./img/refresh.png" alt="刷新登入" title="刷新登入"></span>
                 <span id="user-account">用户</span>
                 <span onclick="outLogin()"> 退出 </span>
             </div>
         </div>
+    </div>
+    <div class="info">
+        <p><span class="label">用户名:</span><span id="user-name">无</span></p>
+        <p><span class="label">会员等级:</span><span id="user-level">普通会员</span></p>
+        <p><span class="label">到期时间:</span><span id="user-date">已到期</span></p>
     </div>
     <div class="ui-cnt fn-clear">
         <div class="er">
@@ -127,6 +131,7 @@
             }
         };
         getVaidlogin();
+        var refreshed = false;
         function getVaidlogin() {
             ajax({
                 type: "post",
@@ -141,11 +146,22 @@
                         }
                         window.location.href = '/';
                     } else {
+                        var userAccount = document.getElementById('user-account');
+                        var userName = document.getElementById('user-name');
+                        var userLevel = document.getElementById('user-level');
+                        var userDate = document.getElementById('user-date');
+                        userAccount.textContent = result.userName;
+                        userName.textContent = result.userName;
+                        if (result.endDate) {
+                            var endTime = new Date(result.endDate.replace(/-/g, '/')).getTime();
+                            if (endTime > new Date().getTime()) {
+                                userLevel.textContent = 'VIP会员';
+                                userDate.textContent = result.endDate;
+                            }
+                        }
                         if (!sessionStorage.getItem('user')) {
                             sessionStorage.setItem('user', data);
                         }
-                        var userAccount = document.getElementById('user-account');
-                        userAccount.textContent = result.userName;
                     }
                 },
                 error: function () {
@@ -172,14 +188,21 @@
                 }
             });
         }
-        function goBack() {
-            ajax({
-                type: "post",
-                url: '/refreshLogin',
-                success: function (data) {
-                    window.history.go(-1);
-                }
-            });
+        function getRefresh() {
+            var rotation = document.getElementsByClassName('refresh')[0];
+            rotation.querySelector('img').className = 'rotation';
+            if (!refreshed) {
+                refreshed = true;
+                ajax({
+                    type: "post",
+                    url: '/refreshLogin',
+                    success: function (data) {
+                        console.log('刷新成功');
+                        refreshed = false;
+                        rotation.querySelector('img').className = '';
+                    }
+                });
+            }
         }
     </script>
 </body>

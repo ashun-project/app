@@ -61,6 +61,7 @@ var logined = document.getElementById('logined');
 var notLogin = document.getElementById('not-login');
 var userAccount = document.getElementById('user-account');
 var testLook = document.getElementById('test-look');
+var refreshed = false;
 var myAuth = '?end='+60*2;
 var time = new Date().getTime();
 var member = null;
@@ -171,7 +172,7 @@ function changeHead (name) {
     if (name) {
         logined.style.display = 'block';
         notLogin.style.display = 'none';
-        userAccount.textContent = name;
+        // userAccount.textContent = name;
 
     } else {
         logined.style.display = 'none';
@@ -224,6 +225,20 @@ function getMember (result) {
         getAuth(myAuth);
     } else {
         getAuth('');
+    }
+}
+function getRefresh() {
+    var rotation = document.getElementsByClassName('refresh')[0];
+    rotation.querySelector('img').className = 'rotation';
+    if (!refreshed) {
+        refreshed = true;
+        ajax({
+            type: "post",
+            url: '/refreshLogin',
+            success: function (data) {
+                location.reload();
+            }
+        });
     }
 }
 function continueTest() {
