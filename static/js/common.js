@@ -62,7 +62,7 @@ var notLogin = document.getElementById('not-login');
 var userAccount = document.getElementById('user-account');
 var testLook = document.getElementById('test-look');
 var refreshed = false;
-var myAuth = '?end='+60*2;
+var myAuth = '?end=';
 var time = new Date().getTime();
 var member = null;
 var pageUrl = window.location.href;
@@ -224,7 +224,7 @@ function getMember (result) {
     if(isM) {
         getAuth(myAuth);
     } else {
-        getAuth('');
+        getAuth('123456789');
     }
 }
 function getRefresh() {

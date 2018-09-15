@@ -64,10 +64,7 @@ function reset(status) {
         var itemTitle = mySpare.querySelector('.item_title');
         var video = mySpare.querySelector('video');
         var src = video.getAttribute('src').replace('https://mp.xiaojiejie99.top', '');
-        // if (vip) {
-        //     src = src.replace('?end=120', '');
-        // }
-        video.setAttribute('src', '/api2' + src.replace(status, ''));
+        video.setAttribute('src', '/api2' + src.split(status)[0]);
         bodyer.innerHTML = '';
         bodyer.appendChild(itemTitle);
         bodyer.appendChild(video);

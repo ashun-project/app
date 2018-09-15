@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="llh8,llh8.vip,llh8.vip有你/萝莉红吧,萝莉红.萝莉红在线, 萝莉">
+    <meta name="keywords" content="llh8,llh8.vip,llh8.vip有你/萝莉红吧,萝莉红.萝莉红在线, 萝莉">
+    <!-- <link rel="stylesheet" href="./css/style.css"> -->
+    <title>萝莉红</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        table {
+            width: 100%;
+            font-size: .938em;
+            border-collapse: collapse;/*边框会合并为一个单一的边框*/
+        }
+        th {
+            text-align: left;
+            padding: .5em .5em;
+            font-weight: bold;
+            background: #66677c;color: #fff;
+        }
+
+        td {
+            padding: .5em .5em;
+            border-bottom: solid 1px #ccc;
+            text-align: center;
+        }
+
+        table,table tr th, table tr td { border:1px solid #0094ff; }/*设置边框的*/
+        input, button{
+            padding: 8px 5px;
+            border: 1px solid #e5e6e7;
+            box-shadow: 0 0 10px rgba(51, 51, 51, 0.09);
+        }
+        button{
+            padding: 0 15px;
+            height: 33px;
+            background: #1ab394;
+            border-radius: 3px;
+            color: #fff;
+        }
+        .user{
+            padding: 60px 10px;
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .user input, .user button{
+            width: 100%;
+            margin-top: 10px;
+        }
+        .search{
+            height: 60px;
+            padding: 10px;
+        }
+        .search input, .search button{
+            float: left;
+            margin-right: 10px;
+        }
+        #add-time{
+            padding: 2px 5px;
+            font-size: 12px;
+            height: auto;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="user" id="user">
+        <p style="text-align:center; color: #793f3f">超越明天</p>
+        <input type="text" placeholder="user-name">
+        <input type="password" placeholder="password">
+        <button id="login">登录</button>
+    </div>
+    <div class="list" id="list">
+        <div class="search">
+            <input type="text">
+            <button id="search">搜索</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>用户</th>
+                    <th>有效期</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>aaa</td>
+                    <td>2015-08-11</td>
+                    <td>
+                        <div>
+                            <select name="" id="time-list">
+                                <option value="7">一周</option>
+                                <option value="30">一个月</option>
+                                <option value="120">半年</option>
+                                <option value="360">一年</option>
+                            </select><br>
+                            <button id="add-time">添加会员</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function ajax() {
+            var ajaxData = {
+                type: arguments[0].type || "GET",
+                url: arguments[0].url || "",
+                async: arguments[0].async || "true",
+                data: arguments[0].data || null,
+                dataType: arguments[0].dataType || "text",
+                contentType: arguments[0].contentType || "application/x-www-form-urlencoded",
+                beforeSend: arguments[0].beforeSend || function () { },
+                success: arguments[0].success || function () { },
+                error: arguments[0].error || function () { }
+            };
+            ajaxData.beforeSend();
+            var xhr = createxmlHttpRequest();
+            try {
+                xhr.responseType = ajaxData.dataType;
+            } catch (err) {
+                console.log(err)
+            };
+            xhr.open(ajaxData.type, ajaxData.url, ajaxData.async);
+            xhr.setRequestHeader("Content-Type", ajaxData.contentType);
+            xhr.send(convertData(ajaxData.data));
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        ajaxData.success(xhr.response);
+                    } else {
+                        ajaxData.error();
+                    }
+                }
+            }
+        };
+        function createxmlHttpRequest() {
+            if (window.ActiveXObject) {
+                return new ActiveXObject("Microsoft.XMLHTTP");
+            } else if (window.XMLHttpRequest) {
+                return new XMLHttpRequest();
+            }
+        };
+        function convertData(data) {
+            if (typeof data === 'object') {
+                var convertResult = "";
+                for (var c in data) {
+                    convertResult += c + "=" + data[c] + "&";
+                }
+                convertResult = convertResult.substring(0, convertResult.length - 1);
+                return convertResult;
+            } else {
+                return data;
+            }
+        };
+        // getVaidlogin();
+        function getVaidlogin() {
+            ajax({
+                type: "post",
+                url: "/vdidLogin",
+                success: function (data) {
+                    var result = JSON.parse(data);
+                    var user = document.getElementById('user');
+                    var list = document.getElementById('list');
+                    if (result.error) {
+                        user.style.display = 'block';
+                        list.style.display = 'none';
+                    } else {
+                        user.style.display = 'none';
+                    }
+                },
+                error: function () {
+                    alert('系统异常，操作失败');
+                }
+            });
+        }
+        function getUserList () {
+            ajax({
+                type: "post",
+                url: "/userList",
+                success: function (data) {
+                    var list = data.list;
+                    var tbody = document.getElementsByTagName('tbody')[0];
+                    var tr = '';
+                    for (var i = 0; i < list.length; i++) {
+                        tr += '<tr><td>aaa</td><td>2015-08-11</td><td><div>'+
+                            '<select name="" id="time-list">'+
+                                '<option value="7">一周</option>'+
+                                '<option value="30">一个月</option>'+
+                                '<option value="120">半年</option>'+
+                                '<option value="360">一年</option>'+
+                            '</select><br><button id="add-time">添加会员</button></div></td></tr>'
+                    }
+                    tbody.innerHTML = tr;
+                },
+                error: function () {
+                    alert('系统异常，操作失败');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
