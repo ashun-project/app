@@ -21,7 +21,6 @@
             border-collapse: collapse;/*边框会合并为一个单一的边框*/
         }
         th {
-            text-align: left;
             padding: .5em .5em;
             font-weight: bold;
             background: #66677c;color: #fff;
@@ -70,15 +69,38 @@
             height: auto;
             margin-top: 5px;
         }
+        table select{
+            border: 1px solid #eee;
+            margin-right: 5px;
+        }
+        #modal{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            padding: 20px 10px;
+            box-shadow: 0 0 10px rgba(51, 51, 51, 0.09);
+            transform: translate(-50%, -50%);
+            background: #fff;
+        }
+        #modal button{
+            margin: 0 5px;
+            float: left;
+            padding: 3px 27px;
+        }
     </style>
 </head>
 
 <body>
     <div class="user" id="user">
         <p style="text-align:center; color: #793f3f">超越明天</p>
-        <input type="text" placeholder="user-name">
-        <input type="password" placeholder="password">
-        <button id="login">登录</button>
+        <input type="text" id="user-name" placeholder="user-name">
+        <input type="password" id="password" placeholder="password">
+        <button id="login" onclick="gologin()">登录</button>
+    </div>
+    <div id="modal">
+        <button onclick="">取消</button>
+        <button onclick="">确定</button>
     </div>
     <div class="list" id="list">
         <div class="search">
@@ -164,20 +186,22 @@
                 return data;
             }
         };
-        // getVaidlogin();
+        var user = document.getElementById('user');
+        var list = document.getElementById('list');
+        var params = '';
+        getVaidlogin();
         function getVaidlogin() {
             ajax({
                 type: "post",
                 url: "/vdidLogin",
                 success: function (data) {
                     var result = JSON.parse(data);
-                    var user = document.getElementById('user');
-                    var list = document.getElementById('list');
                     if (result.error) {
                         user.style.display = 'block';
                         list.style.display = 'none';
                     } else {
                         user.style.display = 'none';
+                        getUserList();
                     }
                 },
                 error: function () {
@@ -190,19 +214,51 @@
                 type: "post",
                 url: "/userList",
                 success: function (data) {
-                    var list = data.list;
+                    console.log(typeof data)
+                    var list = JSON.parse(data).list;
                     var tbody = document.getElementsByTagName('tbody')[0];
                     var tr = '';
                     for (var i = 0; i < list.length; i++) {
-                        tr += '<tr><td>aaa</td><td>2015-08-11</td><td><div>'+
-                            '<select name="" id="time-list">'+
+                        tr += '<tr id="'+ (i) +'-id" user-data="'+ JSON.stringify(list[i]) +'"><td>aaa</td><td>2015-08-11</td><td><div>'+
+                            '<select name="">'+
                                 '<option value="7">一周</option>'+
                                 '<option value="30">一个月</option>'+
                                 '<option value="120">半年</option>'+
                                 '<option value="360">一年</option>'+
-                            '</select><br><button id="add-time">添加会员</button></div></td></tr>'
+                            '</select><button id="add-time" onclick="addTime('+ i +')">添加会员</button></div></td></tr>'
                     }
                     tbody.innerHTML = tr;
+                },
+                error: function () {
+                    alert('系统异常，操作失败');
+                }
+            });
+        }
+        function addTime(idx, name) {
+            var day = document.getElementById(idx+'-id').querySelector('select').value;
+            params = {
+
+            }
+
+        }
+        function sureAddTme() {
+
+        }
+        function gologin() {
+            var userName = document.getElementById('user-name').value;
+            var password = document.getElementById('password').value;
+            ajax({  
+                type: "post",
+                url: url,
+                data: {userName: userName, password: userName},
+                success: function (data) {
+                    var result = JSON.parse(data);
+                    if (result.error) {
+                        alert(result.error);
+                    } else {
+                        user.style.display = 'none';
+                        list.style.display = 'block';
+                    }
                 },
                 error: function () {
                     alert('系统异常，操作失败');

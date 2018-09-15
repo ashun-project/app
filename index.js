@@ -167,4 +167,27 @@ app.post('/logout', function (req, res, next) {
     res.json({success:'退出成功'});
 });
 
+// 获取用户列表
+app.post('/userList', function (req, res, next) {
+    var login = req.session.loginUser;
+    var userList = ['ashunadmin'];
+    var limit =  '';
+    if (req.body.limit) {
+        limit = ' where userName = "'+ req.body.limit +'"';
+    }
+    var sql = 'SELECT * FROM list'+limit;
+    if(login && userList.indexOf(login.userName) > -1) {
+        pool.getConnection(function (err, conn) {
+            if (err) console.log("POOL userlist-register==> " + err);
+            conn.query(sql, function (err, result) {
+                res.json({list: result});
+                conn.release();
+            });
+        });
+    } else {
+        res.json({error: '重新登入'});
+    }
+});
+
+
 app.listen(8899);
