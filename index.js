@@ -185,9 +185,28 @@ app.post('/userList', function (req, res, next) {
             });
         });
     } else {
-        res.json({error: '重新登入'});
+        res.json({list: [], error: '请重新登入'});
     }
 });
+
+// 更新用户列表
+app.post('/updateUser', function (req, res, next) {
+    var login = req.session.loginUser;
+    var userList = ['ashunadmin'];
+    var sql = 'update list set endDate ="'+ req.body.endDate +'",total = "'+ req.body.total +'" where userName = "'+ req.body.userName + '"';
+    if(login && userList.indexOf(login.userName) > -1) {
+        pool.getConnection(function (err, conn) {
+            if (err) console.log("POOL userlist-register==> " + err);
+            conn.query(sql, function (err, result) {
+                res.json({success: '更新成功'});
+                conn.release();
+            });
+        });
+    } else {
+        res.json({error: '更新失败'});
+    }
+});
+
 
 
 app.listen(8899);

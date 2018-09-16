@@ -175,7 +175,7 @@
     top: 50%;
     left: 50%;
     max-width: 360px;
-    width: 98%;
+    width: 90%;
     transform: translate(-50%, -50%);
     background: #fff;
     box-shadow: 0 0 8px rgba(33, 28, 28, 0.17);
@@ -226,7 +226,7 @@
     top: 50%;
     left: 50%;
     max-width: 400px;
-    width: 98%;
+    width: 90%;
     transform: translate(-50%, -50%);
     background: #fff;
     box-shadow: 0 0 20px rgba(33, 28, 28, 0.3);

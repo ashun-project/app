@@ -69,7 +69,7 @@ function reset(status) {
         bodyer.appendChild(itemTitle);
         bodyer.appendChild(video);
         mySpare.parentNode.removeChild(mySpare);
-        if (!status) {
+        if (status == '123456789') {
             testLook.style.display = 'block';
         }
         video_tagauto(video);

@@ -95,6 +95,12 @@ function search (id) {
         window.location.href = '/';
     }
 }
+function getKeyup(e) {
+    var event = e || window.event;
+    if (event.keyCode == "13") {
+        search('pc-search');
+    }
+}
 function getLogin() {
     var userName = loginForm.userName.value;
     var password = loginForm.password.value;
@@ -217,7 +223,7 @@ function getMember (result) {
     var endTime = '';
     if (result.endDate) {
         endTime = new Date(result.endDate.replace(/-/g, '/')).getTime();
-        if (endTime > time) {
+        if (endTime > time || Number(result.total) > 300) {
             isM = true;
         }
     }
