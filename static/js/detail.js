@@ -9,6 +9,7 @@ var params = window.location.search.split('myparams=');
 var defaultUrl = '';
 var bodyer = document.getElementById('bodyer');
 var mySpare = document.getElementById('my-spare');
+var iframe = '';
 if (params && params.length > 1) defaultUrl = params[1];
 function getAuth(status) {
     getHtml(defaultUrl, status);
@@ -20,7 +21,7 @@ function getHtml(url, status) {
           beforeSend: function () {},
             //some js code 
         success: function (msg) {
-            var reTag = /<link(?:.|\s)*?>|<script(?:.|\s)*?<\/script>|<iframe(?:.|\s)*?<\/iframe>/ig;
+            var reTag = /autoplay="autoplay"|<link(?:.|\s)*?>|<script(?:.|\s)*?<\/script>|<iframe(?:.|\s)*?<\/iframe>/ig;
             document.documentElement.scrollTop=document.body.scrollTop=0;
             mySpare.innerHTML = msg.replace(reTag,'');
             setTimeout(function() {
@@ -63,16 +64,38 @@ function reset(status) {
         }
         var itemTitle = mySpare.querySelector('.item_title');
         var video = mySpare.querySelector('video');
-        var src = video.getAttribute('src').replace('https://mp.xiaojiejie99.top', '');
-        video.setAttribute('src', '/api2' + src.split(status)[0]);
+        var src = video.getAttribute('src');
+        video.setAttribute('src', src.split(status)[0]);
+        // video_tagauto(video);
+
+        // var iframe = document.createElement('iframe');
+        var div = document.createElement('div');
+        var html = '';
+        iframe = document.createElement('iframe');
+        div.appendChild(video);
+        html = '<!doctype html><head><meta charset="utf-8"></head><body>'
+                + '<style>*{box-sizing: border-box;margin:0;padding:0;}video{background:#000;width:100%;padding:30px;}@media(max-width:500px){video{padding: 2px;}}</style>'
+                + div.innerHTML
+                + '<script>var ev = document.querySelector("video");var width = parseInt(ev.getAttribute("width"));var height = parseInt(ev.getAttribute("height")) - 50;'
+                + 'var widthcss = parseInt(ev.offsetWidth);var hig = (height / width) * widthcss;ev.style.height = hig+"px";window.parent.iframe.height=hig+10+"px";<\/script>'
+                + '</body></html>';
+        // +'<script>document.location.href="https://mp.xiaojiejie99.top/uploads/5dPrUy8B7mWJX3sSpivxCv29rULVBA/2018021410422163243953.mp4";<\/script><a target="_blank" href="https://www.baidu.com/">referrer test</a></body>',
+        src = 'javascript:document.write(window.frameElement.getAttribute(\'data-src\'))';
+        iframe.setAttribute('data-src', html);
+        iframe.setAttribute('src', src);
+
+        // var src = video.getAttribute('src').replace('https://mp.xiaojiejie99.top', '');
+        // video.setAttribute('src', '/api2' + src.split(status)[0]);
         bodyer.innerHTML = '';
         bodyer.appendChild(itemTitle);
-        bodyer.appendChild(video);
+        bodyer.appendChild(iframe);
         mySpare.parentNode.removeChild(mySpare);
+
+
         if (status == '123456789') {
             testLook.style.display = 'block';
         }
-        video_tagauto(video);
+        // video_tagauto(video);
         
     } else {
         reset(status);
