@@ -242,6 +242,7 @@ function getRefresh() {
             type: "post",
             url: '/refreshLogin',
             success: function (data) {
+                alert('如充值3分钟后VIP还没开通，请联系客服：QQ3257905932');
                 location.reload();
             }
         });

@@ -16,7 +16,8 @@
     <div class="header mine">
         <div class="head-cont">
             <div class="head-lf">
-                <a href="javascript:history.back(-1);" title="萝莉红">返回</a>
+                    <!-- href="javascript:history.back(-1);"  -->
+                <a href="#" onclick="goBack()" title="萝莉红">返回</a>
             </div>
             <div class="head-rf">
                 <span class="refresh" onclick="getRefresh()"><img src="./img/refresh.png" alt="刷新登入" title="刷新登入"></span>
@@ -214,6 +215,10 @@
                     }
                 });
             }
+        }
+        function goBack(){
+            alert('如充值3分钟后VIP还没开通，请联系客服：QQ3257905932');
+            window.history.back(-1); 
         }
     </script>
     <div style="display:none">
