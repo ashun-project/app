@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <style>
+        html,
+        body {
+            background-color: #efeff4;
+        }
+        p {
+            text-indent: 22px;
+        }
+        span.mui-icon {
+            font-size: 14px;
+            color: #007aff;
+            margin-left: -15px;
+            padding-right: 10px;
+        }
+        .mui-off-canvas-left {
+            color: #fff;
+        }
+        .title {
+            margin: 35px 15px 10px;
+        }
+        .title+.content {
+            margin: 10px 15px 35px;
+            color: #bbb;
+            text-indent: 1em;
+            font-size: 14px;
+            line-height: 24px;
+        }
+        input {
+            color: #000;
+        }
+        a.mui-action-menu{
+            color: #000;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+	<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable">
+        <!--侧滑菜单部分-->
+       <aside id="offCanvasSide" class="mui-off-canvas-left">
+            <!-- <div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+                <div class="mui-scroll">
+                    <div class="title">车辆导航</div>
+                    <div class="content">
+                        这是可拖动式侧滑菜单示例，你可以在这里放置任何内容；关闭侧滑菜单有多种方式： 1.在手机屏幕任意位置向左拖动(drag)；2.点击本侧滑菜单页之外的任意位置; 3.点击如下红色按钮
+                        <span class="android-only">；4.Android手机按back键；5.Android手机按menu键</span>。
+                        <p style="margin: 10px 15px;">
+                            <button id="offCanvasHide" type="button" class="mui-btn mui-btn-danger mui-btn-block"
+                                style="padding: 5px 20px;">关闭侧滑菜单</button>
+                        </p>
+                    </div>
+                    <div class="title" style="margin-bottom: 25px;">车辆品牌示例</div>
+                    <ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted">
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right" href="./list.html?type=baoma">宝马</a>
+                        </li>
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right menu" href="./list.html?type=benci">奔驰</a>
+                        </li>
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right" href="./list.html?type=bingli">宾利</a>
+                        </li>
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right" href="./list.html?type=jiebao">捷豹</a>
+                        </li>
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right" href="./list.html?type=jipun">吉普尼</a>
+                        </li>
+                    </ul>
+                </div>
+            </div> -->
+        </aside>
+        <!--主界面部分-->
+        <div class="mui-inner-wrap">
+            <header class="mui-bar mui-bar-nav">
+                <a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>
+                <a class="mui-btn mui-btn-grey mui-btn-link mui-pull-right">登陆</a>
+                <h1 class="mui-title">MY APP1</h1>
+            </header>
+            <div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
+                <div class="mui-scroll">
+                    <div class="mui-content">
+                        <ul class="mui-table-view mui-grid-view">
+                            <li class="mui-table-view-cell mui-media mui-col-xs-6">
+                                <a href="#">
+                                    <img class="mui-media-object" src="img/muwu.jpg">
+                                    <div class="mui-media-body">幸福就是可以一起睡觉</div>
+                                </a>
+							</li>
+                            <li class="mui-table-view-cell mui-media mui-col-xs-6">
+                                <a href="#">
+                                    <img class="mui-media-object" src="img/yuantiao.jpg">
+                                    <div class="mui-media-body">想要一间这样的木屋，静静的喝咖啡</div>
+                                </a>
+							</li>
+                            <li class="mui-table-view-cell mui-media mui-col-xs-6">
+                                <a href="#"><img class="mui-media-object" src="img/shuijiao.jpg">
+                                    <div class="mui-media-body">Color of SIP CBD</div>
+                                </a>
+							</li>
+                            <li class="mui-table-view-cell mui-media mui-col-xs-6">
+                                <a href="#">
+                                    <img class="mui-media-object" src="img/yuantiao.jpg">
+                                    <div class="mui-media-body">静静看这世界</div>
+                                </a>
+							</li>
+                        </ul>
+                        <!-- <div id="video" style="width:100%;height:300px;background-color:#000000;margin:auto"></div> -->
+                    </div>
+                </div>
+            </div>
+            <!-- off-canvas backdrop -->
+            <div class="mui-off-canvas-backdrop"></div>
+        </div>
+    </div>
+	
+	<script src="js/mui.min.js"></script>
+	<script src="js/menu.js"></script>
+	<script type="text/javascript">
+		mui.init({
+			pullRefresh: {
+				container: '#offCanvasContentScroll',
+				down: {
+					callback: pulldownRefresh
+				}
+			}
+		});
+		mui('body').on('tap','a',function(){
+			document.location.href=this.href;
+		});
+		/**
+		 * 下拉刷新具体业务实现
+		 */
+		function pulldownRefresh() {
+			setTimeout(function() {
+				mui('#offCanvasContentScroll').pullRefresh().endPulldownToRefresh(); //refresh completed
+			}, 1500);
+		}
+	</script>
+	<script src="js/update.js"></script>
+</body>
+</html>

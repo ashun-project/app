@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet"/>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		  <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		  <h1 class="mui-title">detail</h1>
+		</header>
+		<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
+		    <div class="mui-scroll">
+		        <div class="mui-content">
+		            <div id="video" style="width:100%;height:300px;background-color:#000000;margin:auto"></div>
+		        </div>
+		    </div>
+		</div>
+		
+		<!-- js部分 -->
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				pullRefresh: {
+					container: '#offCanvasContentScroll',
+					down: {
+						callback: pulldownRefresh
+					}
+				}
+			});
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					mui('#offCanvasContentScroll').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+			}
+			var video = new plus.video.VideoPlayer('video',{
+				src:'http://103.60.222.43:8899/m3u8/video2.m3u8',
+				controls: true,
+				duration: 60
+			});
+		</script>
+	</body>
+</html>
