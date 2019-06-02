@@ -1,5 +1,5 @@
 {
-    "name" : "uni-app",
+    "name" : "茄子",
     "appid" : "__UNI__7090828",
     "description" : "",
     "versionName" : "1.0.0",
@@ -52,7 +52,7 @@
             "sdkConfigs" : {},
             "icons" : {
                 "ios" : {
-                    "appstore" : "C:/Users/Administrator/Documents/HBuilderProjects/aa/unpackage/tt.png",
+                    "appstore" : "/Users/ashun/Documents/HBuilderProjects/茄子/unpackage/res/splash/tt.png",
                     "ipad" : {
                         "app" : "unpackage/res/icons/76x76.png",
                         "app@2x" : "unpackage/res/icons/152x152.png",
@@ -86,7 +86,7 @@
             },
             "splashscreen" : {
                 "android" : {
-                    "hdpi" : "C:/Users/Administrator/Documents/HBuilderProjects/aa/unpackage/640X960.png"
+                    "hdpi" : "/Users/ashun/Documents/HBuilderProjects/茄子/unpackage/res/splash/640X960.png"
                 }
             }
         }

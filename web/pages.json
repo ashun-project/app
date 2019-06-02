@@ -3,7 +3,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app",
+				"navigationBarTitleText": "茄子",
 				"enablePullDownRefresh": true,
 				"app-plus": {
 					"titleNView": {
@@ -20,6 +20,22 @@
 			"path": "pages/list/list",
 			"style": {
 				"navigationBarTitleText": "列表",
+				"enablePullDownRefresh": true,
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"text": "",
+							"fontSrc": "/static/uni.ttf",
+							"fontSize": "22px"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/search/search",
+			"style": {
+				"navigationBarTitleText": "搜索",
 				"enablePullDownRefresh": true,
 				"app-plus": {
 					"titleNView": {

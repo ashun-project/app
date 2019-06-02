@@ -147,7 +147,7 @@
 	}
 
 	.uni-list-item__content {
-		flex: 1;
+		flex: auto;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column
@@ -156,7 +156,9 @@
 	.uni-list-item__content-title {
 		font-size: 32upx;
 		text-overflow: ellipsis;
-		white-space: nowrap;
+		display:-webkit-box; 
+		-webkit-box-orient:vertical;
+		-webkit-line-clamp:2; 
 		color: inherit;
 		line-height: 1.5;
 		overflow: hidden
@@ -169,6 +171,7 @@
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
+		line-height: 2;
 		overflow: hidden
 	}
 
