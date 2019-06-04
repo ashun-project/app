@@ -9,12 +9,12 @@
 				</view>
 				<!-- #ifndef MP-BAIDU || MP-ALIPAY || MP-TOUTIAO -->
 				<uni-list>
-					<uni-list-item v-for="item in drawerMenu" :title="item.name" @click="goRoute(item.url)" />
+					<uni-list-item v-for="item in drawerMenu" :title="item.name" :drawerIs="true" @click="goRoute(item.url)" />
 				</uni-list>
 				<!-- #endif -->
 				<!-- #ifdef MP-BAIDU || MP-ALIPAY || MP-TOUTIAO -->
 				<view class="uni-list">
-					<uni-list-item v-for="item in drawerMenu" :title="item.name" @click="goRoute(item.url)" />
+					<uni-list-item v-for="item in drawerMenu" :title="item.name" :drawerIs="true" @click="goRoute(item.url)" />
 				</view>
 				<!-- #endif -->
 				<view class="close">
@@ -24,7 +24,7 @@
 		</view>
 		<!-- 搜索 -->
 		<view class="input-view">
-			<uni-icon type="search" size="22" color="#666666" @click="confirm" />
+			<uni-icon type="search" size="22" color="#a929e6" @click="confirm" />
 			<input v-model="searchValue" confirm-type="search" class="input" type="text" placeholder="输入搜索关键词" @confirm="confirm">
 		</view>
 		<!-- 搜索结果 -->
@@ -184,18 +184,25 @@
 	}
 	.close .close-menu{
 		width: 100%;
-		line-height: 2.9
+		line-height: 2.9;
+		background: rgb(209, 63, 235);
+		color: #fff;
+	}
+	.close .close-menu:after{
+		border: 1px solid rgba(242, 101, 237, 0.15);
+	}
+	.close .close-menu.button-hover{
+		background: rgb(153, 28, 175);
 	}
 	.send-email{
 		padding: 30upx;
-		background: #562424;
 		color: #fff;
 	}
 	.input-view {
 		display: flex;
 		align-items: center;
 		flex-direction: row;
-		background-color: #e7e7e7;
+		background-color: #fff;
 		height: 35px;
 		border-radius: 17px;
 		padding: 0 10px;
@@ -208,6 +215,7 @@
 		height: 24px;
 		line-height: 24px;
 		font-size: 16px;
+		color: #a929e6;
 	}
 	.input-view .input {
 		background-color: transparent;
@@ -215,6 +223,7 @@
 	.search-resul{
 		padding: 30upx;
 		padding-top: 0;
+		color: #4c4b4b;
 	}
 	.search-resul .cont{
 		font-weight: bold;

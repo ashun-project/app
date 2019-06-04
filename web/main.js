@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'  
 Vue.prototype.$store = store 
-Vue.prototype.$resource = 'http://192.168.0.12:1338';
+Vue.prototype.$resource = 'http://103.60.222.43:1338';
 Vue.prototype.$dateFormat = function(date, fmt) { //author: meizz   
     date = new Date(Number(date));
     var o = {

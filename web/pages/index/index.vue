@@ -9,14 +9,14 @@
 				</view>
 				<!-- #ifndef MP-BAIDU || MP-ALIPAY || MP-TOUTIAO -->
 				<uni-list>
-					<uni-list-item v-for="item in drawerMenu" :title="item.name" @click="goRoute(item.url)" />
+					<uni-list-item v-for="item in drawerMenu" :title="item.name" :drawerIs="true" @click="goRoute(item.url)" />
 					<!-- <uni-list-item title="Item2" />
 					<uni-list-item :show-badge="true" title="Item3" badge-text="12" /> -->
 				</uni-list>
 				<!-- #endif -->
 				<!-- #ifdef MP-BAIDU || MP-ALIPAY || MP-TOUTIAO -->
 				<view class="uni-list">
-					<uni-list-item v-for="item in drawerMenu" :title="item.name" @click="goRoute(item.url)" />
+					<uni-list-item v-for="item in drawerMenu" :title="item.name" :drawerIs="true" @click="goRoute(item.url)" />
 				</view>
 				<!-- #endif -->
 				<view class="close">
@@ -28,7 +28,7 @@
 		<view class="uni-margin-wrap">
 			<swiper class="swiper" :indicator-dots="indicatorDots" :indicator-color="indicatorColor" :indicator-active-color="indicatorActiveColor" :autoplay="autoplay" :interval="interval" :duration="duration">
 				<swiper-item v-for="item in banner" @click="goOut(item.url)">
-					<view class="swiper-item uni-bg-red">
+					<view class="swiper-item default-color">
 						<image :src="item.img" style="width: 100%; height: 100%" mode=""></image>
 					</view>
 				</swiper-item>
@@ -36,17 +36,17 @@
 		</view>
 		<view class="uni-swiper-msg">
 			<view class="uni-swiper-msg-icon">
-				<uni-icon type="sound" size="22" color="#e65700" />
+				<uni-icon type="sound" size="22" color="#d349f7" />
 			</view>
 			<swiper vertical="true" autoplay="true" circular="true" interval="5000">
 				<swiper-item v-for="(item, index) in msg" :key="index">
-					<navigator>{{item}}</navigator>
+					<navigator style="color:#dc6bf9">{{item}}</navigator>
 				</swiper-item>
 			</swiper>
 		</view>
 		<!-- 导航标签 -->
 		<view class="uni-flex uni-row nav-menu">
-			<view class="btn-warp" v-for="item in menu"><button type="default" @click="goRoute(item.url)">{{item.name}}</button></view>
+			<view class="btn-warp" v-for="item in menu"><button type="default" class="nav-btn" @click="goRoute(item.url)">{{item.name}}</button></view>
 		</view>
 		<!-- 列表 -->
 		<view class="">
@@ -198,10 +198,13 @@
 					},
 					success: (res) => {
 						if (res.data.data) {
-							uni.showModal({
-								content: res.data.data,
-								showCancel: false
-							});
+							setTimeout(function() {
+								uni.showModal({
+									content: res.data.data,
+									showCancel: false
+								});
+							}, 3000)
+							
 						}
 					}
 				});
@@ -229,11 +232,21 @@
 	}
 	.close .close-menu{
 		width: 100%;
-		line-height: 2.9
+		line-height: 2.9;
+		background: rgb(209, 63, 235);
+		color: #fff;
+	}
+	.close .close-menu:after{
+		border: 1px solid rgba(242, 101, 237, 0.15);
+	}
+	.close .close-menu.button-hover{
+		background: rgb(153, 28, 175);
+	}
+	.default-color{
+		background: #f2f2f2;
 	}
 	.send-email{
 		padding: 30upx;
-		background: #562424;
 		color: #fff;
 	}
 	.nav-menu{
@@ -259,21 +272,27 @@
 		padding: 15upx;
 		box-sizing: border-box;
 	}
-	.nav-menu uni-button{
+	.nav-menu .nav-btn{
 		width: 100%;
 		padding: 0;
 		box-sizing: border-box;
 		border: 1px solid rgba(199, 199, 199, 0.2);
 		font-size: 30upx;
-		line-height: 90upx;
-		color: #525252;
+		line-height: 60upx;
+		color: #fff;
+		background: linear-gradient(right , #c24de6, #f568ee);
+        background: -ms-linear-gradient(right , #c24de6, #f568ee);
+        background: -webkit-linear-gradient(right , #c24de6, #f568ee);
+        background: -moz-linear-gradient(right , #c24de6, #f568ee);
 	}
-	.nav-menu uni-button:after{
+	.nav-menu .nav-btn:after{
 		border: 0;
+	}
+	.nav-menu .nav-btn.button-hover{
+		background: rgb(153, 28, 175);
 	}
 	.uni-swiper-msg{
 		background: #fff;
-		box-shadow: 0 0 1px #0404045e;
 	}
 	.uni-swiper-msg-icon{
 		line-height: 22px;
@@ -281,5 +300,7 @@
 	}
 	.tickle{
 		text-align: center;
+		line-height: 3;
+		color: #333;
 	}
 </style>

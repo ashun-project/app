@@ -131,4 +131,10 @@ router.post('/app/search', function (req, res) {
     })
 })
 
+// 更新
+router.post('/app/update', function (req, res) {
+    console.log(req.body)
+    res.json({code: 200});
+})
+
 module.exports = router;

@@ -12,11 +12,12 @@
 	@charset "UTF-8";
 
 	.uni-list {
-		background-color: #fff;
+		background-color: rgba(255, 255, 255, 0);
 		position: relative;
 		width: 100%;
 		display: flex;
-		flex-direction: column
+		flex-direction: column;
+		min-height: 90upx;
 	}
 
 	.uni-list:after {
@@ -29,7 +30,7 @@
 		content: '';
 		-webkit-transform: scaleY(.5);
 		transform: scaleY(.5);
-		background-color: #c8c7cc
+		background-color: #fff
 	}
 
 	.uni-list:before {
@@ -42,6 +43,6 @@
 		content: '';
 		-webkit-transform: scaleY(.5);
 		transform: scaleY(.5);
-		background-color: #c8c7cc
+		background-color: #fff
 	}
 </style>

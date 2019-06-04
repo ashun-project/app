@@ -5,13 +5,11 @@
 				<text class="uni-page-head-title-txt">P{{videoObj.title}}</text>
 			</view>
 		</view>
-		<view class="uni-padding-wrap">
-			<view class="video-wrap">
-				<video v-if="videoObj.video" id="myVideo" :src="videoObj.video"
-				 @error="videoErrorCallback" controls :poster="videoObj.img"></video>
-				<view v-else class="video-cont">
-					<uni-load-more :status="status"/>
-				</view>
+		<view class="video-wrap">
+			<video v-if="videoObj.video" id="myVideo" :src="videoObj.video"
+			 @error="videoErrorCallback" controls :poster="videoObj.img"></video>
+			<view v-else class="video-cont">
+				<uni-load-more :status="status"/>
 			</view>
 		</view>
 		<view class="">
@@ -117,22 +115,28 @@
 		/* margin:0 30upx; */
 	}
 	video {
-		width: 690upx;
+		width: 100%;
+	}
+	#myVideo{
+		width: 100%;
 	}
 	.close {
 		padding: 30upx;
 	}
 	.uni-page-head-title{
 		height: auto;
+		border-color: #fff;
 	}
 	.uni-page-head-title .uni-page-head-title-txt{
 		display: inline-block;
 		text-align: left;
 		line-height: 26px;
 		word-break: break-all;
+		color: #333;
 	}
 	.video-wrap{
-		width: 100%;
+		/* width: 100%; */
+		padding: 0 15upx;
 	}
 	.video-wrap .video-cont{
 		width: 100%;
@@ -142,5 +146,8 @@
 		align-items: center;
 		justify-content: center;
 		margin-bottom: 30upx;
+	}
+	.uni-page-head{
+		padding: 30upx 15upx;
 	}
 </style>

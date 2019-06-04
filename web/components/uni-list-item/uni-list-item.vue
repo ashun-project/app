@@ -1,5 +1,5 @@
 <template>
-	<view :class="disabled ? 'uni-list-item--disabled' : ''" :hover-class="disabled || showSwitch ? '' : 'uni-list-item--hover'" class="uni-list-item" @click="onClick">
+	<view :class="{'uni-list-item--disabled': disabled, 'drawer-is': drawerIs}" :hover-class="disabled || showSwitch ? '' : 'uni-list-item--hover'" class="uni-list-item" @click="onClick">
 		<view class="uni-list-item__container">
 			<view v-if="thumb" class="uni-list-item__icon">
 				<image :src="thumb" class="uni-list-item__icon-img" />
@@ -14,7 +14,7 @@
 			<view v-if="showBadge || showArrow || showSwitch" class="uni-list-item__extra">
 				<uni-badge v-if="showBadge" :type="badgeType" :text="badgeText" />
 				<switch v-if="showSwitch" :disabled="disabled" :checked="switchChecked" @change="onSwitchChange" />
-				<uni-icon v-if="showArrow" :size="20" color="#bbb" type="arrowright" />
+				<uni-icon v-if="showArrow" :size="20" color="#bf6de6" type="arrowright" />
 			</view>
 		</view>
 	</view>
@@ -83,6 +83,10 @@
 						size: 20
 					}
 				}
+			},
+			drawerIs: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -120,7 +124,11 @@
 	.uni-list-item--hover {
 		background-color: #f1f1f1
 	}
-
+	
+	.drawer-is.uni-list-item--hover{
+		background: #f366ee;
+	}
+	
 	.uni-list-item__container {
 		padding: 24upx 30upx;
 		width: 100%;
@@ -143,7 +151,7 @@
 		content: '';
 		-webkit-transform: scaleY(.5);
 		transform: scaleY(.5);
-		background-color: #c8c7cc
+		background-color: #fff
 	}
 
 	.uni-list-item__content {
@@ -161,17 +169,20 @@
 		-webkit-line-clamp:2; 
 		color: inherit;
 		line-height: 1.5;
-		overflow: hidden
+		overflow: hidden;
+		color: rgba(58, 0, 86, 0.67);
 	}
-
+	.drawer-is .uni-list-item__content-title{
+		color: #fff;
+	}
 	.uni-list-item__content-note {
-		color: #999;
+		color: #c99cde;
 		font-size: 28upx;
 		white-space: normal;
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
-		line-height: 2;
+		line-height: 2.5;
 		overflow: hidden
 	}
 
