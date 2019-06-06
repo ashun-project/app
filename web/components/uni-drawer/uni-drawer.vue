@@ -134,10 +134,10 @@
 		height: 100%;
 		/* background: #fff; */
 		/* background-image: linear-gradient(to right , #b715e7, #f568ee); */
-		background: linear-gradient(right , #b715e7, #f568ee);
-        background: -ms-linear-gradient(right , #b715e7, #f568ee);
-        background: -webkit-linear-gradient(right , #b715e7, #f568ee);
-        background: -moz-linear-gradient(right , #b715e7, #f568ee);
+		background: linear-gradient(right , #f568ee, #b715e7);
+        background: -ms-linear-gradient(right , #f568ee, #b715e7);
+        background: -webkit-linear-gradient(right , #f568ee, #b715e7);
+        background: -moz-linear-gradient(right , #f568ee, #b715e7);
 		transition: all .3s ease-out;
 		transform: translatex(-100%)
 	}

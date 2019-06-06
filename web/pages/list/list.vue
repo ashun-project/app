@@ -34,9 +34,9 @@
 		</view>
 		<view class="input-view">
 			<uni-icon type="search" size="22" color="#a929e6" @click="confirm" />
-			<input v-model="searchValue" confirm-type="search" class="input" type="text" placeholder="输入搜索关键词" @confirm="confirm">
+			<input v-model="searchValue" confirm-type="search" class="input" type="text" placeholder="搜你想要" @confirm="confirm">
 		</view>
-		<view class="">
+		<view class="list-data">
 			<uni-list>
 				<uni-list-item v-for="item in listData" :title="item.title" :note="item.time" :thumb="item.img" @click="goRoute('/pages/detail/detail?id='+item.create_time)" />
 			</uni-list>
@@ -239,7 +239,7 @@
 		background: rgb(153, 28, 175);
 	}
 	.default-color{
-		background: #f2f2f2;
+		background: #000;
 	}
 	.send-email{
 		padding: 30upx;
@@ -255,6 +255,7 @@
 		padding: 0 10px;
 		flex: 1;
 		margin: 30upx;
+		box-shadow: 0 0 3px rgba(0, 0, 0, 0.13);
 	}
 	.input {
 		flex: 1;

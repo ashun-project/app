@@ -14,7 +14,7 @@
 			<view v-if="showBadge || showArrow || showSwitch" class="uni-list-item__extra">
 				<uni-badge v-if="showBadge" :type="badgeType" :text="badgeText" />
 				<switch v-if="showSwitch" :disabled="disabled" :checked="switchChecked" @change="onSwitchChange" />
-				<uni-icon v-if="showArrow" :size="20" color="#bf6de6" type="arrowright" />
+				<uni-icon v-if="showArrow" :size="20" :color="drawerIs ? '#fff' : '#bf6de6'" type="arrowright" />
 			</view>
 		</view>
 	</view>
@@ -151,7 +151,7 @@
 		content: '';
 		-webkit-transform: scaleY(.5);
 		transform: scaleY(.5);
-		background-color: #fff
+		background-color: #e0e0e0
 	}
 
 	.uni-list-item__content {
@@ -162,7 +162,7 @@
 	}
 
 	.uni-list-item__content-title {
-		font-size: 32upx;
+		font-size: 28upx;
 		text-overflow: ellipsis;
 		display:-webkit-box; 
 		-webkit-box-orient:vertical;
@@ -170,19 +170,19 @@
 		color: inherit;
 		line-height: 1.5;
 		overflow: hidden;
-		color: rgba(58, 0, 86, 0.67);
+		color: #545454;
 	}
 	.drawer-is .uni-list-item__content-title{
 		color: #fff;
 	}
 	.uni-list-item__content-note {
-		color: #c99cde;
-		font-size: 28upx;
+		color: #9f8ba9;
+		font-size: 24upx;
 		white-space: normal;
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
-		line-height: 2.5;
+		line-height: 3;
 		overflow: hidden
 	}
 
@@ -203,8 +203,9 @@
 	}
 
 	.uni-list-item__icon-img {
-		height: 180upx;
-		width: 180upx
+		height: auto;
+		width: 260upx;
+		display: flex;
 	}
 
 	.uni-list>.uni-list-item:last-child .uni-list-item-container:after {

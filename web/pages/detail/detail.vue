@@ -12,7 +12,8 @@
 				<uni-load-more :status="status"/>
 			</view>
 		</view>
-		<view class="">
+		<text class="random-r">随机推荐</text>
+		<view class="list-data">
 			<uni-list>
 				<uni-list-item v-for="item in recommond" :title="item.title" :note="item.time" :thumb="item.img" @click="goRoute('/pages/detail/detail?id='+item.create_time)" />
 			</uni-list>
@@ -119,13 +120,14 @@
 	}
 	#myVideo{
 		width: 100%;
+		background: #000000;
 	}
 	.close {
 		padding: 30upx;
 	}
 	.uni-page-head-title{
 		height: auto;
-		border-color: #fff;
+		border-color: #e0e0e0;
 	}
 	.uni-page-head-title .uni-page-head-title-txt{
 		display: inline-block;
@@ -149,5 +151,22 @@
 	}
 	.uni-page-head{
 		padding: 30upx 15upx;
+	}
+	.random-r{
+		font-size: 32upx;
+		padding: 15upx 30upx;
+		color: #333;
+		position: relative;
+		display: block;
+	}
+	.random-r:before{
+		content: '';
+		height: 32upx;
+		width: 3px;
+		background: #2963e6;
+		position: absolute;
+		left: 15upx;
+		top: 50%;
+		transform: translateY(-50%);
 	}
 </style>

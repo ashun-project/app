@@ -49,7 +49,7 @@
 			<view class="btn-warp" v-for="item in menu"><button type="default" class="nav-btn" @click="goRoute(item.url)">{{item.name}}</button></view>
 		</view>
 		<!-- 列表 -->
-		<view class="">
+		<view class="list-data">
 			<uni-list>
 				<uni-list-item v-for="item in listData" :title="item.title" :note="item.time" :thumb="item.img" @click="goRoute('/pages/detail/detail?id='+item.create_time)" />
 			</uni-list>
@@ -243,7 +243,7 @@
 		background: rgb(153, 28, 175);
 	}
 	.default-color{
-		background: #f2f2f2;
+		background: #000;
 	}
 	.send-email{
 		padding: 30upx;
@@ -252,6 +252,9 @@
 	.nav-menu{
 		flex-wrap: wrap;
 		padding: 15upx;
+		background: #fff;
+		margin: 30upx 0;
+		box-shadow: 0 0 3px rgba(0, 0, 0, 0.08);
 	}
 	.nav-menu .b-b{
 		border-bottom: 1px solid #e0e0e0;
@@ -301,6 +304,6 @@
 	.tickle{
 		text-align: center;
 		line-height: 3;
-		color: #333;
+		color: #8c699c;
 	}
 </style>

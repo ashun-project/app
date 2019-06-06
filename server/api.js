@@ -52,7 +52,7 @@ router.post('/app/banner', function (req, res) {
 })
 // 信息
 router.post('/app/info', function (req, res) {
-    res.json({code: 200, data: '弹窗显示信息'});
+    res.json({code: 200, data: ''});
 })
 // 最新推荐
 router.post('/app/news/list', function (req, res) {
@@ -134,7 +134,15 @@ router.post('/app/search', function (req, res) {
 // 更新
 router.post('/app/update', function (req, res) {
     console.log(req.body)
-    res.json({code: 200});
+    var host = req.headers['host'];
+    var obj = {
+        code: 200,
+        isUpdate: false,
+        updateApk: 'http://' + host + '/public/qiezi.apk',
+        force: true,
+        note: '重要版本更新'
+    }
+    res.json(obj);
 })
 
 module.exports = router;

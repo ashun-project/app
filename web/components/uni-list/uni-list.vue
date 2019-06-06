@@ -30,7 +30,7 @@
 		content: '';
 		-webkit-transform: scaleY(.5);
 		transform: scaleY(.5);
-		background-color: #fff
+		background-color: #e2e2e2
 	}
 
 	.uni-list:before {
@@ -43,6 +43,6 @@
 		content: '';
 		-webkit-transform: scaleY(.5);
 		transform: scaleY(.5);
-		background-color: #fff
+		background-color: #e2e2e2
 	}
 </style>
