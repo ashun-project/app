@@ -2,7 +2,7 @@
 	<view :class="{'uni-list-item--disabled': disabled, 'drawer-is': drawerIs}" :hover-class="disabled || showSwitch ? '' : 'uni-list-item--hover'" class="uni-list-item" @click="onClick">
 		<view class="uni-list-item__container">
 			<view v-if="thumb" class="uni-list-item__icon">
-				<image :src="thumb" class="uni-list-item__icon-img" />
+				<image :src="thumb" mode="widthFix" class="uni-list-item__icon-img" />
 			</view>
 			<view v-else-if="showExtraIcon" class="uni-list-item__icon">
 				<uni-icon :color="extraIcon.color" :size="extraIcon.size" :type="extraIcon.type" />
@@ -205,7 +205,6 @@
 	.uni-list-item__icon-img {
 		height: auto;
 		width: 260upx;
-		display: flex;
 	}
 
 	.uni-list>.uni-list-item:last-child .uni-list-item-container:after {

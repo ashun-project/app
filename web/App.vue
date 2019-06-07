@@ -2,13 +2,14 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch');
+			var vm = this;
 			// #ifdef APP-PLUS
 			// 锁定屏幕方向
 			plus.screen.lockOrientation('portrait-primary'); //锁定
 			// 检测升级
 			plus.runtime.getProperty(plus.runtime.appid, function(widgetInfo) {
 				uni.request({
-					url: this.$resource + '/app/update', //检查更新的服务器地址
+					url: vm.$resource + '/app/update', //检查更新的服务器地址
 					method: 'POST',
 					data: {
 						author: 'ashun',
@@ -138,10 +139,6 @@
 		margin-top: 10px;
 		font-size: 38upx;
 		color: #808080;
-	}
-	.uni-list-item__icon-img img{
-		opacity: 1;
-		position: sticky;
 	}
 	.list-data{
 		background: #fff;
