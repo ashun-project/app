@@ -137,11 +137,16 @@ router.post('/app/update', function (req, res) {
     var host = req.headers['host'];
     var obj = {
         code: 200,
-        isUpdate: false,
+        isUpdate: false,   // 整包更新
+        isUpdateWgt: false,  // 资源更新
         updateApk: 'http://' + host + '/public/qiezi.apk',
+        wgtUrl: 'http://' + host + '/public/qiezi.wgt',
         force: true,
         note: '重要版本更新'
     }
+    // if (req.body.version === '1.0.0') {
+    //     obj.isUpdateWgt = true;
+    // }
     res.json(obj);
 })
 

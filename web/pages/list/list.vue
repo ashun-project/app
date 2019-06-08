@@ -231,6 +231,7 @@
 		line-height: 2.9;
 		background: rgb(209, 63, 235);
 		color: #fff;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.17);
 	}
 	.close .close-menu:after{
 		border: 1px solid rgba(242, 101, 237, 0.15);
