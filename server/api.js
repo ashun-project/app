@@ -18,7 +18,7 @@ router.all('*', function(req, res, next) {
 });
 
 // 公告
-var notice = ['下载地址:kp12306help@gmail.com', '广告合作:kp12306help@gmail.com', '邮箱反馈:kp12306help@gmail.com'];
+var notice = ['下载地址:sexlookashun@sina.com', '广告合作:sexlookashun@sina.com', '邮箱反馈:sexlookashun@sina.com'];
 
 // var menu = [
 //     wumavideo,
@@ -144,9 +144,9 @@ router.post('/app/update', function (req, res) {
         force: true,
         note: '重要版本更新'
     }
-    // if (req.body.version === '1.0.0') {
-    //     obj.isUpdateWgt = true;
-    // }
+    if (req.body.version === '1.0.0') {
+        obj.isUpdateWgt = true;
+    }
     res.json(obj);
 })
 

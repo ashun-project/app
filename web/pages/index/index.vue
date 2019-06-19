@@ -5,7 +5,7 @@
 			<uni-drawer :visible="showLeft" mode="left" @close="closeDrawer('left')">
 				<view class="send-email">
 					发送邮件获取最新下载地址：
-					kp12306help@gmail.com
+					sexlookashun@sina.com
 				</view>
 				<!-- #ifndef MP-BAIDU || MP-ALIPAY || MP-TOUTIAO -->
 				<uni-list>
@@ -55,7 +55,7 @@
 			</uni-list>
 		</view>
 		<view class="tickle">
-			<text>邮箱反馈：kp12306help@gmail.com</text>
+			<text>邮箱反馈：sexlookashun@sina.com</text>
 		</view>
 	</view>
 </template>
