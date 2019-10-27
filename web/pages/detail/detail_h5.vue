@@ -6,11 +6,12 @@
 			</view>
 		</view>
 		<view class="video-wrap">
-			<video v-if="videoObj.video" id="myVideo" :src="videoObj.video"
-			 @error="videoErrorCallback" controls :poster="videoObj.img"></video>
-			<view v-else class="video-cont">
+			<!-- <video v-if="videoObj.video" id="myVideo" :src="videoObj.video"
+			 @error="videoErrorCallback" controls :poster="videoObj.img"></video> -->
+			<!-- <view v-else class="video-cont">
 				<uni-load-more :status="status"/>
-			</view>
+			</view> -->
+			<div id="video" style="height: :200px;"></div>
 		</view>
 		<text class="random-r">随机推荐</text>
 		<view class="list-data">
@@ -25,6 +26,7 @@
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	// import '@/static/ckplayer/ckplayer.js'
 	export default {
 		components: {
 			uniIcon,
@@ -41,6 +43,9 @@
 			}
 		},
 		onLoad(option) {
+			var script = document.createElement('script');
+			script.src = '/static/ckplayer/ckplayer.js'
+			document.getElementsByTagName('body')[0].appendChild(script);
 			this.getVidoe(option.id);
 			this.getRecommond();
 		},
@@ -72,6 +77,14 @@
 					},
 					success: (res) => {
 						this.videoObj = res.data.data;
+						var videoObject = {
+							container: '#video', //容器的ID或className
+							variable: 'player',//播放函数名称
+							flashplayer: true,
+							poster: this.videoObj.img,//封面图片
+							video: this.videoObj.video
+						};
+						var player = new ckplayer(videoObject);
 					},
 					fail: (res) => {
 						uni.showModal({
@@ -149,6 +162,9 @@
 		justify-content: center;
 		margin-bottom: 30upx;
 	}
+	.video-wrap #video {
+        height: 200px;
+    }
 	.uni-page-head{
 		padding: 30upx 15upx;
 	}
