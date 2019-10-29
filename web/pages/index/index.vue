@@ -57,6 +57,11 @@
 		<view class="tickle">
 			<text>邮箱反馈：sexlookashun@sina.com</text>
 		</view>
+		<view class="friendly">
+			<a v-for="item in friendly" :href="item.url">
+				{{item.name}}
+			</a>
+		</view>
 	</view>
 </template>
 <script>
@@ -84,7 +89,8 @@
 				drawerMenu: [],
 				menu: [],
 				msg: [],
-				banner: []
+				banner: [],
+				friendly: []
 			}
 		},
 		onLoad() {
@@ -95,6 +101,7 @@
 			this.getNotice();
 			this.getBanner();
 			this.getInfo();
+			this.getFriendly();
 		},
 		onPullDownRefresh() {
 			this.getList(true);
@@ -208,6 +215,21 @@
 						}
 					}
 				});
+			},
+			getFriendly() {
+				var vm = this;
+				uni.request({
+					url: '/api/users.json',
+					method: 'GET',
+					header:{
+						'content-type':'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						if (res.data.data) {
+							this.friendly = res.data.data;
+						}
+					}
+				});
 			}
 		}
 	}
@@ -306,5 +328,18 @@
 		text-align: center;
 		line-height: 3;
 		color: #8c699c;
+	}
+	.friendly{
+		border-top: 1px solid #f3e6e6;
+		margin: 0 5px 10px;
+		padding-top: 5px;
+		line-height: 18px;
+	}
+	.friendly a{
+		color: #999;
+		font-size: 12px;
+		text-decoration: none;
+		display: inline-block;
+		padding: 0 5px;
 	}
 </style>
